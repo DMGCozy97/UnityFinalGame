@@ -6,8 +6,17 @@ using UnityEngine;
 
 class Pistol : RayCastWeapons
 {
+    private AudioSource mAudioSrc;
+
+    void Start()
+    {
+        mAudioSrc = GetComponent<AudioSource>();
+    }
+
     public override void Fire(Vector3 fireFromePosition)
     {
+        mAudioSrc.Play();
+
         base.Fire(fireFromePosition);
 
         if (Physics.Raycast(fireFromePosition, transform.forward, out RaycastHit, Range))
