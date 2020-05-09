@@ -10,10 +10,17 @@ public class PlayerAttack : MonoBehaviour
 
     public Weapon[] weapons;
     int activeWeaponIndex = -1;
-    public  Weapon activeWeapon;
+    Weapon activeWeapon;//removed public keyword as this shouldn't be assigned a starting a value in the inspector
 
     public int index = 2;
-  
+
+    //Added by Neil
+    //bools needed for animator transitions
+    //see the animator in Assets/Animations/handgun
+    public Animator animator;
+    bool isAiming;
+    bool isFiring;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -24,6 +31,11 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
+        //don't update if the game is paused
+        //only FixedUpdate is stopped when TimeScale is 0.0
+        if (PauseMenu.GameIsPaused)
+            return;
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
             SetActiveWeapon(0);
         if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -32,11 +44,28 @@ public class PlayerAttack : MonoBehaviour
             SetActiveWeapon(2);
         if (activeWeapon == null) return;
 
+
+        if(Input.GetButton("Fire2"))
+        {
+            isAiming = true;
+        }
+        else
+        {
+            isAiming = false;
+        }
+
         if (Input.GetButtonDown("Fire1"))
         {
             activeWeapon.Fire(transform.position);
+            isFiring = true;
+        }
+        else
+        {
+            isFiring = false;
         }
 
+        animator.SetBool("IsAiming", isAiming);
+        animator.SetBool("IsFiring", isFiring);
     }
    
     private void SetActiveWeapon(int index)

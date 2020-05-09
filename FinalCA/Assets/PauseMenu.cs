@@ -12,7 +12,7 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.P))
         {
             if(GameIsPaused)
             {
@@ -31,15 +31,20 @@ public class PauseMenu : MonoBehaviour
    public void Resume()
     {
         pauseMenuUI.SetActive(false);
-        Time.timeScale = 1f;
+        Time.timeScale = 1.0f;
         GameIsPaused = false;
 
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
     void Pause()
     {
         pauseMenuUI.SetActive(true);
-        Time.timeScale = 0f;
+        Time.timeScale = 0.0f;
         GameIsPaused = true;
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void LoadMenu()
