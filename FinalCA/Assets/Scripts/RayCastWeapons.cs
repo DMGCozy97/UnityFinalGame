@@ -8,6 +8,8 @@ public class RayCastWeapons : Weapon
     public float Range;
     public float DamagePerHit;
 
+    public LayerMask Layer;
+
     protected void ApplyDamage(HealthComponent healthComponent)
     {
         healthComponent.ApplyDamage(DamagePerHit);
